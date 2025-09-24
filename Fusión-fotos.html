@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fusión Fotos</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            background-color: #1e1e1e;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            width: 100%;
+            max-width: 600px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+        h1 {
+            color: #bb86fc;
+            margin-bottom: 20px;
+            font-size: 2.5rem;
+        }
+        p {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 20px;
+        }
+        .input-group {
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #f2f2f2;
+        }
+        input[type="file"] {
+            width: 100%;
+            padding: 10px;
+            background-color: #2c2c2c;
+            color: #f2f2f2;
+            border: 1px solid #444;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+        input[type="file"]::-webkit-file-upload-button {
+            background-color: #03dac6;
+            color: #121212;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-right: 15px;
+        }
+        .button-group {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        button {
+            background-color: #bb86fc;
+            color: #121212;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        button:hover {
+            background-color: #9c68e1;
+        }
+        #result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #2c2c2c;
+            border-radius: 10px;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+        #result img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Fusión Fotos</h1>
+    <p>Sube dos fotos para combinarlas en una sola imagen de estudio.</p>
+    
+    <div class="input-group">
+        <label for="photo1">Sube la primera foto:</label>
+        <input type="file" id="photo1" accept="image/*">
+    </div>
+    
+    <div class="input-group">
+        <label for="photo2">Sube la segunda foto:</label>
+        <input type="file" id="photo2" accept="image/*">
+    </div>
+    
+    <div class="button-group">
+        <button onclick="fusePhotos()">Fusionar Fotos</button>
+        <button onclick="clearPhotos()">Limpiar</button>
+    </div>
+    
+    <div id="result" class="hidden">
+        <h2>Resultado</h2>
+        <img id="fusedImage" src="#" alt="Foto fusionada">
+        <button onclick="downloadImage()">Descargar</button>
+    </div>
+</div>
+
+<script>
+    async function fusePhotos() {
+        const photo1Input = document.getElementById('photo1');
+        const photo2Input = document.getElementById('photo2');
+        const fusedImage = document.getElementById('fusedImage');
+        const resultContainer = document.getElementById('result');
+
+        if (photo1Input.files.length === 0 || photo2Input.files.length === 0) {
+            alert('Por favor, sube las dos fotos.');
+            return;
+        }
+
+        const photo1File = photo1Input.files[0];
+        const photo2File = photo2Input.files[0];
+
+        // This is a placeholder for the actual fusion logic.
+        // In a real application, you would send these files to a server with AI.
+        // For this example, we'll just display a random placeholder.
+        console.log('Fusionando fotos...');
+        
+        // Simulating the fusion process with a placeholder image
+        const placeholderImages = [
+            'https://i.imgur.com/39l21Wq.jpeg', // Replace with your placeholder images
+            'https://i.imgur.com/k91B012.jpeg',
+            'https://i.imgur.com/k6lP09r.jpeg'
+        ];
+        const randomImage = placeholderImages[Math.floor(Math.random() * placeholderImages.length)];
+
+        fusedImage.src = randomImage;
+        fusedImage.alt = 'Foto fusionada';
+        resultContainer.style.display = 'flex';
+        resultContainer.classList.remove('hidden');
+    }
+
+    function clearPhotos() {
+        document.getElementById('photo1').value = '';
+        document.getElementById('photo2').value = '';
+        document.getElementById('result').style.display = 'none';
+        document.getElementById('result').classList.add('hidden');
+    }
+    
+    function downloadImage() {
+        const img = document.getElementById('fusedImage');
+        if (img.src && img.src !== '#') {
+            const link = document.createElement('a');
+            link.href = img.src;
+            link.download = 'fusion-fotos.jpeg';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } else {
+            alert('No hay una imagen para descargar.');
+        }
+    }
+</script>
+
+</body>
+</html>
